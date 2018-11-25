@@ -45,7 +45,7 @@ export class UsermanagementController {
     return await this.userRepository.findById(userProf.id);
   }
 
-  @authenticate('BasicStrategy')
+  // @authenticate('BasicStrategy')
   @post('/users', {
     responses: {
       '200': {
@@ -58,7 +58,7 @@ export class UsermanagementController {
     return await this.userRepository.create(user);
   }
 
-  @authenticate('BasicStrategy')
+  // @authenticate('BasicStrategy')
   @get('/users/count', {
     responses: {
       '200': {
@@ -73,7 +73,7 @@ export class UsermanagementController {
     return await this.userRepository.count(where);
   }
 
-  @authenticate('BasicStrategy')
+  // @authenticate('BasicStrategy')
   @get('/users', {
     responses: {
       '200': {
@@ -92,7 +92,7 @@ export class UsermanagementController {
     return await this.userRepository.find(filter);
   }
 
-  @authenticate('BasicStrategy')
+  // @authenticate('BasicStrategy')
   @patch('/users', {
     responses: {
       '200': {
@@ -108,7 +108,7 @@ export class UsermanagementController {
     return await this.userRepository.updateAll(user, where);
   }
 
-  @authenticate('BasicStrategy')
+  // @authenticate('BasicStrategy')
   @get('/users/{id}', {
     responses: {
       '200': {
@@ -121,7 +121,7 @@ export class UsermanagementController {
     return await this.userRepository.findById(id);
   }
 
-  @authenticate('BasicStrategy')
+  // @authenticate('BasicStrategy')
   @patch('/users/{id}', {
     responses: {
       '204': {
@@ -136,7 +136,7 @@ export class UsermanagementController {
     await this.userRepository.updateById(id, user);
   }
 
-  @authenticate('BasicStrategy')
+  // @authenticate('BasicStrategy')
   @del('/users/{id}', {
     responses: {
       '204': {

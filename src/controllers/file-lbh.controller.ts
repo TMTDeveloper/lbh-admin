@@ -59,6 +59,7 @@ export class FileLBHController {
           no_post: container.fields.no_post[0],
           filename: element.name,
           originalfilename: element.originalFilename,
+          size: element.size,
           date_upload: moment().format(),
         });
         await this.uploadpostRepository.create(post);
@@ -69,7 +70,7 @@ export class FileLBHController {
     }
   }
 
-  @get('/findupload', {
+  @post('/findupload', {
     responses: {
       '200': {
         description: 'Array of Uploadpost model instances',
@@ -87,15 +88,13 @@ export class FileLBHController {
   }
 
   @get('/download')
-  async downloadFile(
-    @requestBody()
-    body: any,
-  ) {
+  async downloadFile(@param.query.string('filename') name?: string) {
     try {
       const downFile = Util.promisify(this.fileService.download);
+      console.log(name);
       const container = await downFile(
         'uploads',
-        body.name,
+        name,
         this.request,
         this.response,
       );

@@ -15,6 +15,11 @@ export class Uploadpost extends Entity {
   filename?: string;
 
   @property({
+    type: 'number',
+  })
+  size?: number;
+
+  @property({
     type: 'string',
   })
   originalfilename?: string;

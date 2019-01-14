@@ -58,7 +58,7 @@ export class FileLBHController {
         let post = new Uploadpost({
           no_post: container.fields.no_post[0],
           filename: element.name,
-          originalfilename: element.originalFilename,
+          originalfilename: element.originalFilename.split(' ').join('_'),
           size: element.size,
           date_upload: moment().format(),
         });

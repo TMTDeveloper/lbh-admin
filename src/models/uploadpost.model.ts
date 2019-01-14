@@ -25,6 +25,11 @@ export class Uploadpost extends Entity {
   originalfilename?: string;
 
   @property({
+    type: 'string',
+  })
+  underscorename?: string;
+
+  @property({
     type: 'date',
   })
   date_upload?: string;

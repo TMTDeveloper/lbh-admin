@@ -46,6 +46,7 @@ export class UsermanagementController {
     return await this.userRepository.findById(userProf.id);
   }
 
+  @authenticate('BasicStrategy')
   @get('/loginadmin')
   async adminlog() {
     const userProf = await this.getCurrentUser();

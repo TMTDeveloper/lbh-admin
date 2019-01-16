@@ -20,6 +20,7 @@ import {MysqlDataSource} from '../datasources';
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
 import {User} from '../models';
 import * as moment from 'moment';
+import {HttpErrors} from '@loopback/rest';
 
 export class MyAuthStrategyProvider implements Provider<Strategy | undefined> {
   constructor(
@@ -48,22 +49,25 @@ export class MyAuthStrategyProvider implements Provider<Strategy | undefined> {
     cb: (err: Error | null, user?: UserProfile | false) => void,
   ) => {
     const encpass = SHA256(password);
+    try {
+      let userdb = await this.userRepository.findById(username);
+      if (userdb == null) {
+        return cb(null, false);
+      }
+      if (userdb.password != encpass.toString().toUpperCase()) {
+        return cb(null, false);
+      }
+      userdb.last_access = moment().format();
+      await this.userRepository.updateById(username, userdb);
+      const userauth = {
+        id: userdb.email,
+        name: userdb.name,
+        password: userdb.password,
+      };
 
-    let userdb = await this.userRepository.findById(username);
-    if (userdb == null) {
-      return cb(null, false);
+      return cb(null, userauth);
+    } catch (error) {
+      throw HttpErrors[401];
     }
-    if (userdb.password != encpass.toString().toUpperCase()) {
-      return cb(null, false);
-    }
-    userdb.last_access = moment().format();
-    await this.userRepository.updateById(username, userdb);
-    const userauth = {
-      id: userdb.email,
-      name: userdb.name,
-      password: userdb.password,
-    };
-
-    return cb(null, userauth);
   };
 }

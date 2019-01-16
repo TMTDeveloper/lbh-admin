@@ -15,6 +15,7 @@ import {
   patch,
   del,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {User} from '../models';
 import {UserRepository} from '../repositories';
@@ -43,6 +44,21 @@ export class UsermanagementController {
       .format();
     await this.userRepository.updateById(userProf.id, userIns);
     return await this.userRepository.findById(userProf.id);
+  }
+
+  @get('/loginadmin')
+  async adminlog() {
+    const userProf = await this.getCurrentUser();
+    let userIns = await this.userRepository.findById(userProf.id);
+    if (userIns.role != 3) {
+      return HttpErrors[500];
+    } else {
+      userIns.session_end = moment()
+        .add(2, 'h')
+        .format();
+      await this.userRepository.updateById(userProf.id, userIns);
+      return await this.userRepository.findById(userProf.id);
+    }
   }
 
   // @authenticate('BasicStrategy')

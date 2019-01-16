@@ -37,6 +37,7 @@ export class UsermanagementController {
   @authenticate('BasicStrategy')
   @get('/login')
   async whoAmI() {
+    console.log('entering');
     const userProf = await this.getCurrentUser();
     let userIns = await this.userRepository.findById(userProf.id);
     userIns.session_end = moment()
@@ -49,10 +50,11 @@ export class UsermanagementController {
   @authenticate('BasicStrategy')
   @get('/loginadmin')
   async adminlog() {
+    console.log('entering');
     const userProf = await this.getCurrentUser();
     let userIns = await this.userRepository.findById(userProf.id);
     if (userIns.role != 3) {
-      return HttpErrors[500];
+      HttpErrors[500];
     } else {
       userIns.session_end = moment()
         .add(2, 'h')

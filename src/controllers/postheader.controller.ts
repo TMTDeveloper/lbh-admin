@@ -40,13 +40,16 @@ export class PostheaderController {
 
     let str = defaultNo.substr(0, 10 - a.toString().length);
     postheader.no_post = str + a.toString();
-    try {
-      await this.postheaderRepository.create(postheader);
-      console.log(postheader);
-      return postheader;
-    } catch {
-      throw HttpErrors[500];
-    }
+    // try {
+    //   await this.postheaderRepository.create(postheader);
+    //   console.log(postheader);
+    //   return postheader;
+    // } catch {
+    //   throw HttpErrors[500];
+    // }
+    await this.postheaderRepository.create(postheader);
+    console.log(postheader);
+    return postheader;
   }
 
   @get('/postheaders/count', {

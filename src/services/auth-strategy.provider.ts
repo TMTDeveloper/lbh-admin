@@ -67,7 +67,7 @@ export class MyAuthStrategyProvider implements Provider<Strategy | undefined> {
 
       return cb(null, userauth);
     } catch (error) {
-      throw HttpErrors[401];
+      return 'error bro';
     }
   };
 }

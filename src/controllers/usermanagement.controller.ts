@@ -25,6 +25,7 @@ import {
   authenticate,
 } from '@loopback/authentication';
 import * as moment from 'moment';
+import {SHA256} from 'crypto-js';
 
 export class UsermanagementController {
   constructor(
@@ -81,6 +82,9 @@ export class UsermanagementController {
     },
   })
   async create(@requestBody() user: User): Promise<User> {
+    user.password = SHA256(user.password)
+      .toString()
+      .toUpperCase();
     return await this.userRepository.create(user);
   }
 

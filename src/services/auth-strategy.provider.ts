@@ -50,19 +50,22 @@ export class MyAuthStrategyProvider implements Provider<Strategy | undefined> {
   ) => {
     const encpass = SHA256(password);
     try {
-      let userdb = await this.userRepository.findById(username);
+      let filter: Filter = {
+        where: {email_login: username},
+      };
+      let userdb = await this.userRepository.find(filter);
       if (userdb == null) {
         return cb(null, false);
       }
-      if (userdb.password != encpass.toString().toUpperCase()) {
+      if (userdb[0].password != encpass.toString().toUpperCase()) {
         return cb(null, false);
       }
-      userdb.last_access = moment().format();
-      await this.userRepository.updateById(username, userdb);
+      userdb[0].last_access = moment().format();
+      await this.userRepository.updateById(username, userdb[0]);
       const userauth = {
-        id: userdb.email,
-        name: userdb.name,
-        password: userdb.password,
+        id: userdb[0].email,
+        name: userdb[0].name,
+        password: userdb[0].password,
       };
 
       return cb(null, userauth);

@@ -39,11 +39,14 @@ export class UsermanagementController {
   async whoAmI() {
     console.log('entering');
     const userProf = await this.getCurrentUser();
-    let userIns = await this.userRepository.findById(userProf.id);
-    userIns.session_end = moment()
+    let filter: Filter = {
+      where: {email_login: userProf.id},
+    };
+    let userIns = await this.userRepository.find(filter);
+    userIns[0].session_end = moment()
       .add(2, 'h')
       .format();
-    await this.userRepository.updateById(userProf.id, userIns);
+    await this.userRepository.updateById(userProf.id, userIns[0]);
     return await this.userRepository.findById(userProf.id);
   }
 
@@ -51,15 +54,19 @@ export class UsermanagementController {
   @get('/loginadmin')
   async adminlog() {
     console.log('entering');
+
     const userProf = await this.getCurrentUser();
-    let userIns = await this.userRepository.findById(userProf.id);
-    if (userIns.role != 3) {
+    let filter: Filter = {
+      where: {email_login: userProf.id},
+    };
+    let userIns = await this.userRepository.find(filter);
+    if (userIns[0].role != 3) {
       HttpErrors[500];
     } else {
-      userIns.session_end = moment()
+      userIns[0].session_end = moment()
         .add(2, 'h')
         .format();
-      await this.userRepository.updateById(userProf.id, userIns);
+      await this.userRepository.updateById(userProf.id, userIns[0]);
       return await this.userRepository.findById(userProf.id);
     }
   }

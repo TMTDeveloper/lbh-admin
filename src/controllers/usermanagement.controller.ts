@@ -138,6 +138,24 @@ export class UsermanagementController {
     return await this.userRepository.updateAll(user, where);
   }
 
+  @patch('/users/reset', {
+    responses: {
+      '200': {
+        description: 'User PATCH success count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
+  })
+  async reset(
+    @requestBody() user: User,
+    @param.query.object('where', getWhereSchemaFor(User)) where?: Where,
+  ): Promise<Count> {
+    user.password = SHA256('password')
+      .toString()
+      .toUpperCase();
+    return await this.userRepository.updateAll(user, where);
+  }
+
   // @authenticate('BasicStrategy')
   @get('/users/{id}', {
     responses: {

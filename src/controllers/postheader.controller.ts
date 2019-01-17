@@ -76,11 +76,10 @@ export class PostheaderController {
     },
   })
   async find(
-    @requestBody() filterbody: Filter,
     @param.query.object('filter', getFilterSchemaFor(Postheader))
     filter?: Filter,
   ): Promise<Postheader[]> {
-    return await this.postheaderRepository.find(filterbody);
+    return await this.postheaderRepository.find(filter);
   }
 
   @patch('/postheaders', {

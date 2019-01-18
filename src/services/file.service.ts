@@ -27,7 +27,7 @@ export interface FileService {
     options?: Object,
   ): void;
   download(container: any, file: any, req: any, res: any, cb: any): void;
-  removeFile(container: any, file: any, cb: any): void;
+  removeFile(container: any, file: any): void;
 }
 
 export class FileServiceProvider implements Provider<FileService> {

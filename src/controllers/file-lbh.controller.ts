@@ -113,7 +113,8 @@ export class FileLBHController {
       const container = await delFile('uploads', name);
       await this.uploadpostRepository.deleteById(body.filename);
       return await container;
-    } catch {
+    } catch (error) {
+      console.log(error);
       throw HttpErrors[500];
     }
   }

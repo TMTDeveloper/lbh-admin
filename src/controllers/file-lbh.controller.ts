@@ -111,8 +111,8 @@ export class FileLBHController {
       const delFile = Util.promisify(this.fileService.removeFile);
       console.log(body);
       const container = await delFile('uploads', body.filename);
-      await this.uploadpostRepository.deleteById(body.filename);
-      return await container;
+      await container;
+      return await this.uploadpostRepository.deleteById(body.filename);
     } catch (error) {
       console.log(error);
       throw HttpErrors[500];

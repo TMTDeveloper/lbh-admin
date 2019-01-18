@@ -110,7 +110,7 @@ export class FileLBHController {
     try {
       const delFile = Util.promisify(this.fileService.removeFile);
       console.log(body);
-      const container = await delFile('uploads', name);
+      const container = await delFile('uploads', body.filename);
       await this.uploadpostRepository.deleteById(body.filename);
       return await container;
     } catch (error) {

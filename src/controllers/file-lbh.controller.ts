@@ -105,6 +105,18 @@ export class FileLBHController {
     }
   }
 
+  @post('/filedelete')
+  async deleteFile(@requestBody() body: any) {
+    try {
+      const delFile = Util.promisify(this.fileService.removeFile);
+      const container = await delFile('uploads', name);
+      await this.uploadpostRepository.deleteById(body.filename);
+      return await container;
+    } catch {
+      throw HttpErrors[500];
+    }
+  }
+
   @get('/filelist', {
     responses: {
       '200': {

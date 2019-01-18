@@ -4,13 +4,14 @@ import {Entity, model, property} from '@loopback/repository';
 export class Uploadpost extends Entity {
   @property({
     type: 'string',
-    id: true,
     required: true,
   })
   no_post: string;
 
   @property({
     type: 'string',
+    id: true,
+    required: true,
   })
   filename?: string;
 

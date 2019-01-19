@@ -67,7 +67,7 @@ export class PostdetailController {
     @param.query.object('filter', getFilterSchemaFor(Postdetail))
     filter?: Filter,
   ): Promise<Postdetail[]> {
-    return await this.postdetailRepository.find(filterbody);
+    return await this.postdetailRepository.find(filter);
   }
 
   @patch('/postdetails', {

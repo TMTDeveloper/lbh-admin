@@ -63,7 +63,6 @@ export class PostdetailController {
     },
   })
   async find(
-    @requestBody() filterbody: Filter,
     @param.query.object('filter', getFilterSchemaFor(Postdetail))
     filter?: Filter,
   ): Promise<Postdetail[]> {

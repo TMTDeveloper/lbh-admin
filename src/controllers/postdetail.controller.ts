@@ -70,7 +70,7 @@ export class PostdetailController {
     return await this.postdetailRepository.find(filter);
   }
 
-  @get('/postdetails', {
+  @get('/postdetails/postedby', {
     responses: {
       '200': {
         description: 'Array of Post that have been posted',

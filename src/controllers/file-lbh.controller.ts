@@ -66,7 +66,7 @@ export class FileLBHController {
       });
       return await container;
     } catch (err) {
-      console.log('inHere');
+      console.log(err);
       return err;
     }
   }

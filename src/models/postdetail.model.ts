@@ -17,6 +17,11 @@ export class Postdetail extends Entity {
   @property({
     type: 'string',
   })
+  posted_name?: string;
+
+  @property({
+    type: 'string',
+  })
   message?: string;
 
   @property({

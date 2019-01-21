@@ -17,6 +17,7 @@ import {
 } from '@loopback/rest';
 import {Postdetail} from '../models';
 import {PostdetailRepository} from '../repositories';
+import {filter} from 'minimatch';
 
 export class PostdetailController {
   constructor(
@@ -67,6 +68,27 @@ export class PostdetailController {
     filter?: Filter,
   ): Promise<Postdetail[]> {
     return await this.postdetailRepository.find(filter);
+  }
+
+  @get('/postdetails', {
+    responses: {
+      '200': {
+        description: 'Array of Post that have been posted',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: {'x-ts-type': Postdetail}},
+          },
+        },
+      },
+    },
+  })
+  async findPosted(@param.query.string('email') email?: string) {
+    let filter = {
+      where: {no_post: email},
+    };
+    let find = await this.postdetailRepository.find(filter);
+    let unique = [...new Set(find.map(item => item.posted_by))];
+    return unique;
   }
 
   @patch('/postdetails', {

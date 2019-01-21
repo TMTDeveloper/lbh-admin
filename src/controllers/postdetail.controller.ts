@@ -84,7 +84,7 @@ export class PostdetailController {
   })
   async findPosted(@param.query.string('email') email?: string) {
     let filter = {
-      where: {no_post: email},
+      where: {posted_by: email},
     };
     let find = await this.postdetailRepository.find(filter);
     let unique = [...new Set(find.map(item => item.posted_by))];

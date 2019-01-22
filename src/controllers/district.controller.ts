@@ -63,11 +63,10 @@ export class DistrictController {
     },
   })
   async find(
-    @requestBody() filterbody: Filter,
     @param.query.object('filter', getFilterSchemaFor(Districts))
     filter?: Filter,
   ): Promise<Districts[]> {
-    return await this.districtsRepository.find(filterbody);
+    return await this.districtsRepository.find(filter);
   }
 
   @patch('/districts', {

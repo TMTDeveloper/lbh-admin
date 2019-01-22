@@ -63,11 +63,10 @@ export class RegencyController {
     },
   })
   async find(
-    @requestBody() filterbody: Filter,
     @param.query.object('filter', getFilterSchemaFor(Regencies))
     filter?: Filter,
   ): Promise<Regencies[]> {
-    return await this.regenciesRepository.find(filterbody);
+    return await this.regenciesRepository.find(filter);
   }
 
   @patch('/regencies', {

@@ -63,10 +63,9 @@ export class VillageController {
     },
   })
   async find(
-    @requestBody() filterbody: Filter,
     @param.query.object('filter', getFilterSchemaFor(Villages)) filter?: Filter,
   ): Promise<Villages[]> {
-    return await this.villagesRepository.find(filterbody);
+    return await this.villagesRepository.find(filter);
   }
 
   @patch('/villages', {

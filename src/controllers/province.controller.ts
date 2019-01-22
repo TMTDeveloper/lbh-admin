@@ -63,11 +63,10 @@ export class ProvinceController {
     },
   })
   async find(
-    @requestBody() filterbody: Filter,
     @param.query.object('filter', getFilterSchemaFor(Provinces))
     filter?: Filter,
   ): Promise<Provinces[]> {
-    return await this.provincesRepository.find(filterbody);
+    return await this.provincesRepository.find(filter);
   }
 
   @patch('/provinces', {

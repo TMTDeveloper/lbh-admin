@@ -22,6 +22,11 @@ export class Postheader extends Entity {
   @property({
     type: 'string',
   })
+  posted_name?: string;
+
+  @property({
+    type: 'string',
+  })
   title?: string;
 
   @property({

@@ -1,7 +1,7 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model({name: 'post_hd'})
-export class Postheader extends Entity {
+@model({name: 'kegiatan_hd'})
+export class Kegiatanheader extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -82,42 +82,22 @@ export class Postheader extends Entity {
   @property({
     type: 'string',
   })
-  nama_korban?: string;
-
-  @property({
-    type: 'string',
-  })
-  nama_pelaku?: string;
+  nama_pelaksana?: string;
 
   @property({
     type: 'number',
   })
-  jenis_kejadian?: number;
-
-  @property({
-    type: 'number',
-  })
-  usia?: number;
-
-  @property({
-    type: 'number',
-  })
-  jenis_kelamin?: number;
+  jenis_kegiatan?: number;
 
   @property({
     type: 'date',
   })
-  tanggal_kejadian?: string;
+  tanggal_kegiatan?: string;
 
   @property({
     type: 'string',
   })
-  kronologi?: string;
-
-  @property({
-    type: 'string',
-  })
-  pembelajaran?: string;
+  deskripsi?: string;
 
   @property({
     type: 'date',
@@ -129,7 +109,7 @@ export class Postheader extends Entity {
   })
   date_modified?: string;
 
-  constructor(data?: Partial<Postheader>) {
+  constructor(data?: Partial<Kegiatanheader>) {
     super(data);
   }
 }

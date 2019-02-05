@@ -67,6 +67,18 @@ export class User extends Entity {
   })
   date_modified: string;
 
+  @property({
+    type: 'date',
+    required: true,
+  })
+  date_of_birth: string;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  sex: number;
+
   constructor(data?: Partial<User>) {
     super(data);
   }

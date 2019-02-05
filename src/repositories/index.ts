@@ -7,3 +7,6 @@ export * from './districts.repository';
 export * from './provinces.repository';
 export * from './regencies.repository';
 export * from './villages.repository';
+export * from './general.repository';
+export * from './kegiatan.repository';
+export * from './development.repository';

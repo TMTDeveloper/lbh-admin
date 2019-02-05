@@ -8,3 +8,6 @@ export * from './provinces.model';
 export * from './regencies.model';
 export * from './villages.model';
 export * from './districts.model';
+export * from './general.model';
+export * from './kegiatanheader';
+export * from './development.model';

@@ -29,6 +29,10 @@ export class Uploadpost extends Entity {
     type: 'date',
   })
   date_upload?: string;
+  @property({
+    type: 'number',
+  })
+  type: number;
 
   constructor(data?: Partial<Uploadpost>) {
     super(data);

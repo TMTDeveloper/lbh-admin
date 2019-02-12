@@ -57,6 +57,7 @@ export class FileLBHController {
       container.files.file.forEach(async (element: any) => {
         let post = new Uploadpost({
           no_post: container.fields.no_post[0],
+          type: container.fields.type[0] ? container.fields.type[0] : 0,
           filename: element.name,
           originalfilename: element.originalFilename,
           size: element.size,

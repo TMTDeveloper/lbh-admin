@@ -10,3 +10,4 @@ export * from './villages.repository';
 export * from './general.repository';
 export * from './kegiatan.repository';
 export * from './development.repository';
+export * from './post-log.repository';

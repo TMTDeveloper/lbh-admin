@@ -18,11 +18,13 @@ import {
 import {Postdetail} from '../models';
 import {PostdetailRepository} from '../repositories';
 import {filter} from 'minimatch';
-
+import {PostheaderRepository} from '../repositories';
 export class PostdetailController {
   constructor(
     @repository(PostdetailRepository)
     public postdetailRepository: PostdetailRepository,
+    @repository(PostheaderRepository)
+    public postheaderRepository: PostheaderRepository,
   ) {}
 
   @post('/postdetails', {

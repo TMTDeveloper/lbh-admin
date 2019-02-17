@@ -18,11 +18,19 @@ import {
 } from '@loopback/rest';
 import {Postheader} from '../models';
 import {PostheaderRepository} from '../repositories';
-
+import {promises} from 'fs';
+import {PostLogRepository} from '../repositories';
+import {Postdetail} from '../models';
+import {PostdetailRepository} from '../repositories';
+import moment = require('moment');
 export class PostheaderController {
   constructor(
     @repository(PostheaderRepository)
     public postheaderRepository: PostheaderRepository,
+    @repository(PostLogRepository)
+    public postLogRepository: PostLogRepository,
+    @repository(PostdetailRepository)
+    public postdetailRepository: PostdetailRepository,
   ) {}
 
   @post('/postheaders', {
@@ -78,8 +86,46 @@ export class PostheaderController {
   async find(
     @param.query.object('filter', getFilterSchemaFor(Postheader))
     filter?: Filter,
-  ): Promise<Postheader[]> {
-    return await this.postheaderRepository.find(filter);
+  ): Promise<any> {
+    let dataHeaders = await this.postheaderRepository.find(filter);
+    let dataDetails = await this.postdetailRepository.find();
+    let dataLog = await this.postLogRepository.find();
+    let dataHeadersConverted: any[] = [];
+    dataHeaders.forEach(element => {
+      let a: any = element.toObject();
+      let matchedNoPost = dataDetails.filter(elArr => {
+        return elArr.no_post == element.no_post;
+      });
+      let matchedDataDetail: any;
+      if (matchedNoPost.length > 0) {
+        matchedDataDetail = matchedNoPost.reduce(function(prev, current) {
+          return moment(prev.date_created).isAfter(current.date_created)
+            ? prev
+            : current;
+        });
+        a.last_post = matchedDataDetail.date_created;
+      }
+
+      let matchedLogPost = dataLog.filter(elArr => {
+        return elArr.no_post == element.no_post;
+      });
+      let matchedLogDetail: any;
+      if (matchedLogPost.length > 0) {
+        matchedLogDetail = matchedLogPost.reduce(function(prev, current) {
+          return moment(prev.last_access).isAfter(current.last_access)
+            ? prev
+            : current;
+        });
+        a.date_access = matchedLogDetail.last_access;
+      } else {
+        a.date_access = null;
+      }
+
+      dataHeadersConverted.push(a);
+    });
+    return new Promise((resolve, reject) => {
+      resolve(dataHeadersConverted);
+    });
   }
 
   @patch('/postheaders', {

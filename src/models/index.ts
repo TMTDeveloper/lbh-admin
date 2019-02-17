@@ -11,3 +11,4 @@ export * from './districts.model';
 export * from './general.model';
 export * from './kegiatanheader';
 export * from './development.model';
+export * from './post-log.model';

@@ -11,3 +11,4 @@ export * from './village.controller';
 export * from './general.controller';
 export * from './development.controller';
 export * from './kegiatan.controller';
+export * from './postlog.controller';

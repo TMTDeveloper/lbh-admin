@@ -23,6 +23,7 @@ import {PostLogRepository} from '../repositories';
 import {Postdetail} from '../models';
 import {PostdetailRepository} from '../repositories';
 import moment = require('moment');
+import {isNullOrUndefined} from 'util';
 export class PostheaderController {
   constructor(
     @repository(PostheaderRepository)
@@ -85,11 +86,18 @@ export class PostheaderController {
   })
   async find(
     @param.query.object('filter', getFilterSchemaFor(Postheader))
-    filter?: Filter,
+    filter?: any,
   ): Promise<any> {
+    let dataLog: any[] = [];
     let dataHeaders = await this.postheaderRepository.find(filter);
     let dataDetails = await this.postdetailRepository.find();
-    let dataLog = await this.postLogRepository.find();
+    if (filter !== undefined) {
+      dataLog = await this.postLogRepository.find({
+        where: {
+          id_user: filter.reqby,
+        },
+      });
+    }
     let dataHeadersConverted: any[] = [];
     dataHeaders.forEach(element => {
       let a: any = element.toObject();

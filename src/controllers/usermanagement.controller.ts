@@ -150,8 +150,16 @@ export class UsermanagementController {
     @requestBody() user: User,
     @param.query.object('where', getWhereSchemaFor(User)) where?: Where,
   ): Promise<Count> {
-    console.log(moment(user.date_of_birth).format('DDMMYYYY'));
-    user.password = SHA256(moment(user.date_of_birth).format('DDMMYYYY'))
+    console.log(
+      moment(user.date_of_birth)
+        .utc(true)
+        .format('DDMMYYYY'),
+    );
+    user.password = SHA256(
+      moment(user.date_of_birth)
+        .utc(true)
+        .format('DDMMYYYY'),
+    )
       .toString()
       .toUpperCase();
     return await this.userRepository.updateAll(user, where);

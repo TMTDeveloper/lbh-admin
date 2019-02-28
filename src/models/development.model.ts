@@ -15,6 +15,11 @@ export class Development extends Entity {
   message?: string;
 
   @property({
+    type: 'string',
+  })
+  approved?: string;
+
+  @property({
     type: 'date',
   })
   date_created?: string;

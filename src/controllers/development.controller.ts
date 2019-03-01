@@ -21,7 +21,7 @@ import {DevelopmentRepository} from '../repositories';
 export class DevelopmentController {
   constructor(
     @repository(DevelopmentRepository)
-    public developmentRepository : DevelopmentRepository,
+    public developmentRepository: DevelopmentRepository,
   ) {}
 
   @post('/developments', {
@@ -33,7 +33,11 @@ export class DevelopmentController {
     },
   })
   async create(@requestBody() development: Development): Promise<Development> {
-    return await this.developmentRepository.create(development);
+    let developmentWithNoPost = await this.developmentRepository.create(
+      development,
+    );
+    developmentWithNoPost.no_post = development.no_post;
+    return developmentWithNoPost;
   }
 
   @get('/developments/count', {
@@ -63,7 +67,8 @@ export class DevelopmentController {
     },
   })
   async find(
-    @param.query.object('filter', getFilterSchemaFor(Development)) filter?: Filter,
+    @param.query.object('filter', getFilterSchemaFor(Development))
+    filter?: Filter,
   ): Promise<Development[]> {
     return await this.developmentRepository.find(filter);
   }

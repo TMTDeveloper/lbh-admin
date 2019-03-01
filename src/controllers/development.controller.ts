@@ -33,6 +33,13 @@ export class DevelopmentController {
     },
   })
   async create(@requestBody() development: Development): Promise<Development> {
+    if (development.ind == 0 || development.ind == null) {
+      let findAllDevelopment = await this.developmentRepository.find({
+        where: {no_post: development.no_post},
+      });
+      development.ind = findAllDevelopment.length + 1;
+    }
+
     let developmentWithNoPost = await this.developmentRepository.create(
       development,
     );

@@ -12,6 +12,11 @@ export class Development extends Entity {
   @property({
     type: 'string',
   })
+  ind?: number;
+
+  @property({
+    type: 'string',
+  })
   message?: string;
 
   @property({

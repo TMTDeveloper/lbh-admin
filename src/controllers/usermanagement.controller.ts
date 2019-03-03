@@ -147,22 +147,15 @@ export class UsermanagementController {
     },
   })
   async reset(
-    @requestBody() user: User,
+    @requestBody() user: any,
     @param.query.object('where', getWhereSchemaFor(User)) where?: Where,
   ): Promise<Count> {
-    console.log(
-      moment(user.date_of_birth)
-        .utc(true)
-        .format('DDMMYYYY'),
-    );
-    user.password = SHA256(
-      moment(user.date_of_birth)
-        .utc(true)
-        .format('DDMMYYYY'),
-    )
+    user.password = SHA256(user.new_password)
       .toString()
       .toUpperCase();
-    return await this.userRepository.updateAll(user, where);
+    delete user.new_password;
+    let newUser = new User(user);
+    return await this.userRepository.updateAll(newUser, where);
   }
 
   // @authenticate('BasicStrategy')

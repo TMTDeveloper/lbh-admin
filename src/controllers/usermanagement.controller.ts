@@ -44,6 +44,9 @@ export class UsermanagementController {
       where: {email_login: userProf.id},
     };
     let userIns = await this.userRepository.find(filter);
+    if (userIns[0].active != 'Y' || userIns[0].role > 2) {
+      throw new HttpErrors.Unauthorized('User not Authorized to login');
+    }
     userIns[0].session_end = moment()
       .add(2, 'h')
       .format();
@@ -61,7 +64,7 @@ export class UsermanagementController {
       where: {email_login: userProf.id},
     };
     let userIns = await this.userRepository.find(filter);
-    if (userIns[0].role < 3) {
+    if (userIns[0].role < 3 && userIns[0].active == 'Y') {
       HttpErrors[500];
     } else {
       userIns[0].session_end = moment()

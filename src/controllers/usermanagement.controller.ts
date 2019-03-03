@@ -61,7 +61,7 @@ export class UsermanagementController {
       where: {email_login: userProf.id},
     };
     let userIns = await this.userRepository.find(filter);
-    if (userIns[0].role != 3) {
+    if (userIns[0].role < 3) {
       HttpErrors[500];
     } else {
       userIns[0].session_end = moment()

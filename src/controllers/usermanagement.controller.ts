@@ -64,8 +64,8 @@ export class UsermanagementController {
       where: {email_login: userProf.id},
     };
     let userIns = await this.userRepository.find(filter);
-    if (userIns[0].role < 3 && userIns[0].active == 'Y') {
-      HttpErrors[500];
+    if (userIns[0].role < 3 || userIns[0].active != 'Y') {
+      throw new HttpErrors.Unauthorized('User not Authorized to login');
     } else {
       userIns[0].session_end = moment()
         .add(2, 'h')

@@ -18,7 +18,7 @@ import {
   HttpErrors,
 } from '@loopback/rest';
 import {User} from '../models';
-import {UserRepository} from '../repositories';
+import {UserRepository, AppConstantRepository} from '../repositories';
 import {
   AuthenticationBindings,
   UserProfile,
@@ -33,7 +33,11 @@ export class UsermanagementController {
     public userRepository: UserRepository,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     public getCurrentUser: Getter<UserProfile>,
+    @repository(AppConstantRepository)
+    public appConstantRepository: AppConstantRepository,
   ) {}
+
+  currVer = '1.00';
 
   @authenticate('BasicStrategy')
   @get('/login')
@@ -53,6 +57,11 @@ export class UsermanagementController {
       await this.userRepository.updateById(userProf.id, userIns[0]);
       return await this.userRepository.findById(userProf.id);
     }
+  }
+
+  @get('/version')
+  async versionChecker() {
+    return await this.appConstantRepository.findById(1);
   }
 
   @authenticate('BasicStrategy')

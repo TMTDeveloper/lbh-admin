@@ -12,3 +12,4 @@ export * from './general.model';
 export * from './kegiatanheader';
 export * from './development.model';
 export * from './post-log.model';
+export * from './app-constant.model';

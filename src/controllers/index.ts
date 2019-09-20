@@ -12,4 +12,3 @@ export * from './general.controller';
 export * from './development.controller';
 export * from './kegiatan.controller';
 export * from './postlog.controller';
-export * from './version.controller';

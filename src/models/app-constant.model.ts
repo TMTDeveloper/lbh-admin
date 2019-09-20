@@ -29,15 +29,8 @@ export class AppConstant extends Entity {
 
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
 
   constructor(data?: Partial<AppConstant>) {
     super(data);
   }
 }
-
-export interface AppConstantRelations {
-  // describe navigational properties here
-}
-
-export type AppConstantWithRelations = AppConstant & AppConstantRelations;
